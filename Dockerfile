@@ -1,5 +1,5 @@
 # Use a imagem oficial do PHP com Nginx
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Instalar as dependências do sistema
 RUN apt-get update && apt-get install -y \

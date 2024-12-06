@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure zip \
     && docker-php-ext-install gd zip
 
+# Instalar Node.js e npm
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs
+
 # Rodar o build do Vite (para gerar a pasta build)
 RUN npm install
 RUN npm run build  # Garante que a pasta build seja gerada

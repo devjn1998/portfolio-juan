@@ -1,4 +1,4 @@
-# Use a imagem oficial do PHP com FPM
+# Use a imagem oficial do PHP com Nginx
 FROM php:8.2-fpm
 
 # Instalar as dependências do sistema
@@ -8,18 +8,9 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libzip-dev \
     unzip \
-    nginx \
     git \
     && docker-php-ext-configure zip \
     && docker-php-ext-install gd zip
-
-# Instalar Node.js e npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs
-
-# Rodar o build do Vite (para gerar a pasta build)
-RUN npm install
-RUN npm run build  # Garante que a pasta build seja gerada
 
 # Instalar o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -33,15 +24,11 @@ COPY . .
 # Instalar dependências do Laravel
 RUN composer install --optimize-autoloader --no-dev
 
-# Configurar permissões
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/build
-
-
 # Copiar os arquivos de configuração do Nginx
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/default.conf /etc/nginx/sites-available/default
 
-# Expor a porta 80
+# Expor as portas necessárias
 EXPOSE 80
 
-# Comando para iniciar o PHP-FPM e o Nginx
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Comando para iniciar o Nginx e o PHP
+CMD service php8.1-fpm start && nginx -g 'daemon off;'

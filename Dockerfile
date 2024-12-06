@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure zip \
     && docker-php-ext-install gd zip
 
+# Rodar o build do Vite (para gerar a pasta build)
+RUN npm install
+RUN npm run build  # Garante que a pasta build seja gerada
+
 # Instalar o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -26,7 +30,8 @@ COPY . .
 RUN composer install --optimize-autoloader --no-dev
 
 # Configurar permissões
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public/build
+
 
 # Copiar os arquivos de configuração do Nginx
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf

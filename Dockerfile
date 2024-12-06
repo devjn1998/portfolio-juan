@@ -1,4 +1,4 @@
-# Use a imagem oficial do PHP com Nginx
+# Use a imagem oficial do PHP com FPM
 FROM php:8.2-fpm
 
 # Instalar as dependências do sistema
@@ -25,10 +25,6 @@ COPY . .
 RUN composer install --optimize-autoloader --no-dev
 
 # Copiar os arquivos de configuração do Nginx
-COPY ./nginx/default.conf /etc/nginx/sites-available/default
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Expor as portas necessárias
-EXPOSE 80
 
-# Comando para iniciar o Nginx e o PHP
-CMD service php8.1-fpm start && nginx -g 'daemon off;'

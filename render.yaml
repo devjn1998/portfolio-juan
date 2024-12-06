@@ -1,13 +1,16 @@
 services:
   - type: web
     name: seu-projeto
-    env: php
+    environment: php
     buildCommand: |
-      composer install
+      composer install --no-dev --optimize-autoloader
       php artisan key:generate
+      php artisan config:cache
+      php artisan route:cache
       npm install
       npm run build
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    startCommand: |
+      php-fpm && nginx -g "daemon off;"
     envVars:
       - key: APP_ENV
         value: production

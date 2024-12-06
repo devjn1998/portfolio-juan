@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libzip-dev \
     unzip \
+    nginx \
     git \
     && docker-php-ext-configure zip \
     && docker-php-ext-install gd zip
@@ -23,6 +24,9 @@ COPY . .
 
 # Instalar dependências do Laravel
 RUN composer install --optimize-autoloader --no-dev
+
+# Configurar permissões
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Copiar os arquivos de configuração do Nginx
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf

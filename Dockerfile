@@ -29,7 +29,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Copiar os arquivos de configuração do Nginx
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./portfolio/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 # Expor a porta 80
 EXPOSE 80

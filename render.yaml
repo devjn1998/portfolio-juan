@@ -1,7 +1,13 @@
 services:
   - type: web
     name: seu-projeto
-    environment: php
+    environment: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
     buildCommand: |
       composer install --no-dev --optimize-autoloader
       php artisan key:generate
@@ -10,9 +16,4 @@ services:
       npm install
       npm run build
     startCommand: |
-      php-fpm && nginx -g "daemon off;"
-    envVars:
-      - key: APP_ENV
-        value: production
-      - key: APP_DEBUG
-        value: false
+      php-fpm -D && nginx -g "daemon off;"

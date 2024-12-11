@@ -4,11 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Models\Project;
 
+
 Route::get('/', [EventController::class, 'index']);
-Route::get('/events/createSkills', [EventController::class, 'createSkills']);
 Route::get('/events/createProject', [EventController::class, 'createProject']);
-
-
 Route::post('/events', [EventController::class, 'store']);
 
 

@@ -103,6 +103,8 @@
                         alt="{{ $project->title}}">
                 </div>
 
+
+
             @empty
                 <div>
                     <h4>Não há projetos cadastrados</h4>

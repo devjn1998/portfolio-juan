@@ -1,19 +1,42 @@
 services:
   - type: web
-    name: seu-projeto
-    environment: docker
-    dockerfilePath: ./Dockerfile
+    name: seu-app-nome
+    env: docker
+    buildCommand: docker build -t app .
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
     envVars:
+      - key: APP_NAME
+        value: "Seu App Nome"
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
         value: false
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan key:generate
-      php artisan config:cache
-      php artisan route:cache
-      npm install
-      npm run build
-    startCommand: |
-      php-fpm -D && nginx -g "daemon off;"
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: nome-do-seu-banco
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: nome-do-seu-banco
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: nome-do-seu-banco
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: nome-do-seu-banco
+          property: username
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: nome-do-seu-banco
+          property: password
+
+databases:
+  - name: nome-do-seu-banco
+    ipAllowList: []
+    plan: free

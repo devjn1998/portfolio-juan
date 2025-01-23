@@ -48,7 +48,7 @@ class EventController extends Controller
             return new Technology($techData);
         });
 
-        return view('events.createProject', compact('technologies'));
+        return view('Events.createProject', compact('technologies'));
     }
     public function contactRoute()
     {
@@ -186,4 +186,3 @@ class EventController extends Controller
         return response()->json(['success' => true]);
     }
 }
-

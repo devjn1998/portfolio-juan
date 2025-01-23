@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: seu-app-nome
+    name: portfoliojuandev
     env: docker
     buildCommand: docker build -t app .
     startCommand: php artisan serve --host 0.0.0.0 --port $PORT
     envVars:
       - key: APP_NAME
-        value: "Seu App Nome"
+        value: "Portfolio juan"
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
@@ -17,26 +17,26 @@ services:
         value: pgsql
       - key: DB_HOST
         fromDatabase:
-          name: nome-do-seu-banco
+          name: portfoliojuandev
           property: host
       - key: DB_PORT
         fromDatabase:
-          name: nome-do-seu-banco
+          name: portfoliojuandev
           property: port
       - key: DB_DATABASE
         fromDatabase:
-          name: nome-do-seu-banco
+          name: portfoliojuandev
           property: database
       - key: DB_USERNAME
         fromDatabase:
-          name: nome-do-seu-banco
+          name: portfoliojuandev
           property: username
       - key: DB_PASSWORD
         fromDatabase:
-          name: nome-do-seu-banco
+          name: portfoliojuandev
           property: password
 
 databases:
-  - name: nome-do-seu-banco
+  - name: portfoliojuandev
     ipAllowList: []
     plan: free

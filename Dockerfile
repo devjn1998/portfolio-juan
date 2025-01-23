@@ -24,11 +24,15 @@ WORKDIR /var/www
 # Copie os arquivos do projeto
 COPY . /var/www/
 
+# Copie o arquivo de configuração padrão
+COPY .env.example /var/www/.env
+
 # Instale dependências do projeto
 RUN composer install --no-dev --optimize-autoloader
 
+# Configure permissões necessárias
+RUN chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
 # Gere a chave do aplicativo
 RUN php artisan key:generate
-
-# Configure permissões
-RUN chown -R www-data:www-data /var/www/storage
